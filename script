@@ -1,0 +1,39 @@
+Commandos para la ISO
+
+Para instalar Cubic, abre una terminal en tu sistema y ejecuta:
+  sudo apt-add-repository ppa:cubic-wizard/release
+  sudo apt-get update
+  sudo apt-get install cubic
+
+Usuario Administrador: Con privilegios sudo.
+  adduser administrador
+  usermod -aG sudo administrador 
+  
+Usuario Enterprise: Un usuario estándar, sin privilegios.
+  adduser enterprise  
+
+Primero, actualiza la lista de paquetes.
+  apt update
+
+Instala las aplicaciones desde los repositorios de Ubuntu:
+  apt install -y gedit gnome-screenshot libreoffice remmina remmina-plugin-rdp cifs-utils firefox
+
+# Google Chrome
+  wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+  apt install -y ./google-chrome-stable_current_amd64.deb
+
+# Microsoft Edge
+  wget https://packages.microsoft.com/repos/edge/pool/main/m/microsoft-edge-stable/microsoft-edge-stable_118.0.2088.76-1_amd64.deb
+  apt install -y ./microsoft-edge-stable_118.0.2088.76-1_amd64.deb
+
+# Anydesk (la URL puede cambiar, verifica en su web oficial)
+  wget https://download.anydesk.com/linux/anydesk_6.1.1-1_amd64.deb
+  apt install -y ./anydesk_6.1.1-1_amd64.deb
+
+# Limpia los paquetes descargados
+  rm *.deb
+
+Para asegurar la máxima compatibilidad de impresoras, instala este metapaquete:
+  apt install -y printer-driver-all
+
+  
