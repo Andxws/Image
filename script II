@@ -1,0 +1,52 @@
+Restringir y Personalizar el Escritorio del Usuario Enterprise
+
+Esta es la parte más delicada. La mejor manera de hacerlo es creando un script que configure el escritorio en el primer inicio de sesión del usuario enterprise.
+
+    Crea el script de configuración:
+    Bash
+
+nano /etc/skel/configurar_escritorio.sh
+
+    El directorio /etc/skel es una "plantilla". Los archivos que pongas aquí se copiarán automáticamente al directorio personal de cualquier nuevo usuario que se cree.
+
+Pega el siguiente contenido en el script y guarda el archivo (Ctrl+O, Enter, Ctrl+X):
+Bash
+
+#!/bin/bash
+
+# Configurar los favoritos en la barra de tareas (el dock de GNOME)
+gsettings set org.gnome.shell favorite-apps "['org.gnome.Terminal.desktop', 'org.gnome.gedit.desktop', 'org.gnome.Screenshot.desktop', 'com.anydesk.Anydesk.desktop', 'libreoffice-writer.desktop', 'org.gnome.Nautilus.desktop', 'firefox.desktop', 'google-chrome.desktop', 'com.microsoft.Edge.desktop', 'org.remmina.Remmina.desktop']"
+
+# Bloquear el dock para que el usuario no pueda cambiarlo
+gsettings set org.gnome.shell.extensions.dash-to-dock dock-fixed true
+gsettings set org.gnome.shell.extensions.dash-to-dock intellihide false
+gsettings set org.gnome.shell.extensions.dash-to-dock running-apps-in-tooltip true
+
+# Eliminar este script después de ejecutarse para que no lo haga de nuevo
+rm -- "$0"
+
+Haz que el script sea ejecutable:
+Bash
+
+chmod +x /etc/skel/configurar_escritorio.sh
+
+Configura el script para que se auto-ejecute:
+Bash
+
+    mkdir -p /etc/skel/.config/autostart
+    echo "[Desktop Entry]
+    Name=ConfiguracionInicial
+    Exec=/home/enterprise/configurar_escritorio.sh
+    Type=Application
+    Terminal=false
+    " > /etc/skel/.config/autostart/configuracion_inicial.desktop
+
+    Este último paso asegura que cuando el usuario enterprise inicie sesión por primera vez, el script se ejecute, configure la barra de tareas, la bloquee y luego se auto-elimine.
+
+Paso 5: Finalizar la Creación de la ISO
+
+    Una vez que hayas ejecutado todos los comandos en la terminal de Cubic, haz clic en "Next".
+
+    Cubic te mostrará una lista de paquetes que se pueden eliminar para ahorrar espacio. Puedes desmarcar los que consideres importantes (como los de soporte de idiomas si los necesitas).
+
+    Continúa con los siguientes pasos. Cubic comprimirá el sistema de archivos y generará la imagen ISO final en tu directorio de proyecto.
